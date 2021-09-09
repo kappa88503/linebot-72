@@ -4,6 +4,7 @@ import os
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
+import random
 
 app = Flask(__name__)
 
