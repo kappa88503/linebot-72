@@ -1,32 +1,40 @@
-# 載入需要的模組
-from __future__ import unicode_literals
-import os
+# app.py
 from flask import Flask, request, abort
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
+
+from linebot import (
+    LineBotApi, WebhookHandler
+)
+from linebot.exceptions import (
+    InvalidSignatureError
+)
+from linebot.models import (
+    MessageEvent, TextMessage, TextSendMessage,
+)
 import random
+from datetime import datetime
 
 app = Flask(__name__)
 
-# LINE 聊天機器人的基本資料
 line_bot_api = LineBotApi('vpVg86tVKnbsIFw2JlicqbxPhzIeD246B5asVzbwMBCaalUGr5rdb1ghL5SeJeD+mJAWgqzH+QGDL76KA6Ns7uyPjK57WhartmXtxcZFxeOaB14PyEp6ITfKRguKnBSQswi+5kQixxzWvx0VLNdk4QdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('ed9c515dac10991c798d4e2a559fa667')
 
-# 接收 LINE 的資訊
+
 @app.route("/callback", methods=['POST'])
 def callback():
+    # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
 
+    # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
+    # handle webhook body
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
         abort(400)
 
     return 'OK'
-
 
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -95,7 +103,6 @@ def handle_message(event):
         
     if event.message.text == "test":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='伺服器連線正常'))
-
         
 if __name__ == "__main__":
     app.run()
