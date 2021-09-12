@@ -54,7 +54,7 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='好的,我會說話'))
     
     if speak == False:
-        return False
+        return 0
     
     if event.message.text == "不要問安靜":
         speak = False
