@@ -36,10 +36,10 @@ def callback():
 
     return 'OK'
 
-speak = True
+
 
 @handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
+def handle_message(event, speak = True):
     
     msg = event.message.text
     #print(msg)
