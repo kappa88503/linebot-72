@@ -36,30 +36,13 @@ def callback():
 
     return 'OK'
 
-speak = True
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global speak
-    
+
     msg = event.message.text
     #print(msg)
     msg = msg.encode('utf-8')
-    
-    if event.message.text == "不要問說話":
-        if speak:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='好的,我會說話'))
-        else:
-            speak = True
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='好的,我會說話'))
-    
-    if speak == False:
-        return 0
-    
-    if event.message.text == "不要問安靜":
-        speak = False
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='好的,我會安靜'))
-    
+        
     if event.message.text == "骰子":
         r = random.randint(1,6)
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=f'擲出 {r} 點'))
