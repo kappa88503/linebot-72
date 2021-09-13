@@ -36,9 +36,11 @@ def callback():
 
     return 'OK'
 
+txt_list = []
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-
+    global txt_list
     msg = event.message.text
     #print(msg)
     msg = msg.encode('utf-8')
