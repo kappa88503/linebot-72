@@ -37,10 +37,11 @@ def callback():
     return 'OK'
 
 txt_list = []
+pe = 0
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global txt_list
+    global txt_list, pe
     msg = event.message.text
     #print(msg)
     msg = msg.encode('utf-8')
@@ -105,6 +106,13 @@ def handle_message(event):
         
     if event.message.text == "test":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='伺服器連線正常'))
+    
+    if event.message.text == "數字":
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pe))
+        
+    if event.message.text == "數字+":
+        pe += 1
+        
         
 if __name__ == "__main__":
     app.run()
