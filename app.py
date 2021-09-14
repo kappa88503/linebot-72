@@ -48,6 +48,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    global wek_curriculum
     msg = event.message.text
     #print(msg)
     msg = msg.encode('utf-8')
