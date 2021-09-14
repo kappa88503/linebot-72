@@ -41,6 +41,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
+    txt = event.message.text
     #print(msg)
     msg = msg.encode('utf-8')
         
@@ -102,7 +103,7 @@ def handle_message(event):
         ran_ran = f'我選 {random.choice(ran_ran)}'
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=ran_ran))
         
-    if msg == "test" or msg == "Test":
+    if txt == "test" or txt == "Test":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='伺服器連線正常'))
     
 
