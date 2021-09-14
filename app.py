@@ -117,25 +117,31 @@ def handle_message(event):
     if ('星期' in line_text or '禮拜' in line_text) and '課表' in line_text:
         txt = list(line_text)
         if txt[2] == '一':
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='\n'.join(wek_curriculum[0]))
+            curriculum_text = '\n'.join(wek_curriculum[0])
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=curriculum_text)
 
         elif txt[2] == '二':
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='\n'.join(wek_curriculum[1]))
+            curriculum_text = '\n'.join(wek_curriculum[1])
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=curriculum_text)
 
         elif txt[2] == '三':
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='\n'.join(wek_curriculum[2]))
+            curriculum_text = '\n'.join(wek_curriculum[2])
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=curriculum_text)
 
         elif txt[2] == '四':
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='\n'.join(wek_curriculum[3]))
+            curriculum_text = '\n'.join(wek_curriculum[3])
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=curriculum_text)
 
         elif txt[2] == '五':
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='\n'.join(wek_curriculum[4]))
+            curriculum_text = '\n'.join(wek_curriculum[4])
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=curriculum_text)
 
         elif txt[2] == '六' or txt[2] == '日':
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放假啦')
 
         else:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=f'沒有星期{txt[2:-2]}')
+            curriculum_text = f'沒有星期{txt[2:-2]}'
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=curriculum_text)
 
 
 
