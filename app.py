@@ -21,7 +21,11 @@ handler = WebhookHandler('ed9c515dac10991c798d4e2a559fa667')
 # def
 
 # -----------------------------------------------------------------------------------------------
-
+wek_curriculum = [['跑班選修', '跑班選修', '跑班選修', '跑班選修', '選物四', '數學甲', '選化三'],
+                  ['英語文', '國語文', '國語文', '數學甲', '英文作文', '藝生', '藝生', '化學課輔'],
+                  ['數學甲', '彈性學習', '彈性學習', '彈性學習', '選物三-1', '體育', '國語文'],
+                  ['數學甲', '國語文', '跑班選修', '跑班選修', '英語文', '選物四', '選化五-1'],
+                  ['英文作文', '體育', '綜合活動', '綜合活動', '選化三', '跑班選修', '跑班選修']]
 # -----------------------------------------------------------------------------------------------
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -112,28 +116,26 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='伺服器連線正常'))
 
     if ('星期' in line_text or '禮拜' in line_text) and '課表' in line_text:
-        wek_curriculum = [['跑班選修', '跑班選修', '跑班選修', '跑班選修', '選物四', '數學甲', '選化三'],
-                  ['英語文', '國語文', '國語文', '數學甲', '英文作文', '藝生', '藝生', '化學課輔'],
-                  ['數學甲', '彈性學習', '彈性學習', '彈性學習', '選物三-1', '體育', '國語文'],
-                  ['數學甲', '國語文', '跑班選修', '跑班選修', '英語文', '選物四', '選化五-1'],
-                  ['英文作文', '體育', '綜合活動', '綜合活動', '選化三', '跑班選修', '跑班選修']]
+        
         txt = list(line_text)
         if txt[2] == '一':
             cur_text = '\n'.join(wek_curriculum[0])
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
-        if txt[2] == '二':
+        elif txt[2] == '二':
             cur_text = '\n'.join(wek_curriculum[1])
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
-        if txt[2] == '三':
+        elif txt[2] == '三':
             cur_text = '\n'.join(wek_curriculum[2])
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
-        if txt[2] == '四':
+        elif txt[2] == '四':
             cur_text = '\n'.join(wek_curriculum[3])
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
-        if txt[2] == '五':
+        elif txt[2] == '五':
             cur_text = '\n'.join(wek_curriculum[4])
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
-        
+        elif txt[2] == '六' or  txt[2] == '日':
+            cur_text = '放假啦'
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
         else:
             cur_text = f'沒有星期{txt[2:-2]}'
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
