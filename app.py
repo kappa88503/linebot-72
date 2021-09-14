@@ -102,7 +102,7 @@ def handle_message(event):
         ran_ran = f'我選 {random.choice(ran_ran)}'
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=ran_ran))
         
-    if event.message.text == "test":
+    if lower(event.message.text) == "test":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='伺服器連線正常'))
     
 
