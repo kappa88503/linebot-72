@@ -121,6 +121,19 @@ def handle_message(event):
         if txt[2] == '一':
             cur_text = '\n'.join(wek_curriculum[0])
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
+        if txt[2] == '二':
+            cur_text = '\n'.join(wek_curriculum[1])
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
+        if txt[2] == '三':
+            cur_text = '\n'.join(wek_curriculum[2])
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
+        if txt[2] == '四':
+            cur_text = '\n'.join(wek_curriculum[3])
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
+        if txt[2] == '五':
+            cur_text = '\n'.join(wek_curriculum[4])
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
+        
         else:
             cur_text = f'沒有星期{txt[2:-2]}'
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
