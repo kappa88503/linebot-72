@@ -109,7 +109,7 @@ def handle_message(event):
         ran_ran = f'我選 {random.choice(ran_ran)}'
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=ran_ran))
         
-    if line_text == "test" or line_text == "Test":
+    if line_text.lower() == "test":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='伺服器連線正常'))
 
     if ('星期' in line_text or '禮拜' in line_text) and '課表' in line_text:
