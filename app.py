@@ -67,42 +67,33 @@ def handle_message(event):
         sex_book = 'https://nhentai.net/g/' + str(random.randint(111111, 369999))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=sex_book))
         
-    if line_text == "我出剪刀":
+    if '我出' in line_text:
         mora_list = ['剪刀', '石頭', '布']
-        mora_player = '剪刀'
         a = random.choice(mora_list)
-        if a == '石頭':
-            mora_end = '我贏了'
-        elif a == '布':
-            mora_end = '你贏了'
-        else:
-            mora_end = '沒輸沒贏'
-        mora_txt = f'你出:{mora_player}\n我出:{a}\n\n結果:{mora_end}'
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=mora_txt))
-
-    elif line_text == "我出石頭":
-        mora_list = ['剪刀', '石頭', '布']
-        mora_player = '石頭'
-        a = random.choice(mora_list)
-        if a == '剪刀':
-            mora_end = '你贏了'
-        elif a == '布':
-            mora_end = '我贏了'
-        else:
-            mora_end = '沒輸沒贏'
-        mora_txt = f'你出:{mora_player}\n我出:{a}\n\n結果:{mora_end}'
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=mora_txt))
-
-    elif line_text == "我出布":
-        mora_list = ['剪刀', '石頭', '布']
-        mora_player = '布'
-        a = random.choice(mora_list)
-        if a == '石頭':
-            mora_end = '你贏了'
-        elif a == '剪刀':
-            mora_end = '我贏了'
-        else:
-            mora_end = '沒輸沒贏'
+        if '剪刀' in line_text:
+            mora_player = '剪刀'
+            if a == '石頭':
+                mora_end = '我贏了'
+            elif a == '布':
+                mora_end = '你贏了'
+            else:
+                mora_end = '沒輸沒贏'
+        elif '石頭' in line_text:
+            mora_player = '石頭'
+            if a == '剪刀':
+                mora_end = '你贏了'
+            elif a == '布':
+                mora_end = '我贏了'
+            else:
+                mora_end = '沒輸沒贏'
+        elif '布' in line_text:
+            mora_player = '布'
+            if a == '石頭':
+                mora_end = '你贏了'
+            elif a == '剪刀':
+                mora_end = '我贏了'
+            else:
+                mora_end = '沒輸沒贏'
         mora_txt = f'你出:{mora_player}\n我出:{a}\n\n結果:{mora_end}'
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=mora_txt))
      
