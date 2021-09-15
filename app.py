@@ -69,8 +69,8 @@ def handle_message(event):
         
     if '我出' in line_text:
         mora_list = ['剪刀', '石頭', '布']
-        a = random.choice(mora_list)
         if '剪刀' in line_text:
+            a = random.choice(mora_list)
             mora_player = '剪刀'
             if a == '石頭':
                 mora_end = '我贏了'
@@ -78,7 +78,10 @@ def handle_message(event):
                 mora_end = '你贏了'
             else:
                 mora_end = '沒輸沒贏'
+            mora_txt = f'你出:{mora_player}\n我出:{a}\n\n結果:{mora_end}'
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=mora_txt))
         elif '石頭' in line_text:
+            a = random.choice(mora_list)
             mora_player = '石頭'
             if a == '剪刀':
                 mora_end = '你贏了'
@@ -86,7 +89,10 @@ def handle_message(event):
                 mora_end = '我贏了'
             else:
                 mora_end = '沒輸沒贏'
+            mora_txt = f'你出:{mora_player}\n我出:{a}\n\n結果:{mora_end}'
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=mora_txt))
         elif '布' in line_text:
+            a = random.choice(mora_list)
             mora_player = '布'
             if a == '石頭':
                 mora_end = '你贏了'
@@ -94,8 +100,8 @@ def handle_message(event):
                 mora_end = '我贏了'
             else:
                 mora_end = '沒輸沒贏'
-        mora_txt = f'你出:{mora_player}\n我出:{a}\n\n結果:{mora_end}'
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=mora_txt))
+            mora_txt = f'你出:{mora_player}\n我出:{a}\n\n結果:{mora_end}'
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=mora_txt))
      
     if '不要問選一個 ' in line_text:
         event.message.text = event.message.text.replace('不要問選一個 ', '')
