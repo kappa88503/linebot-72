@@ -11,7 +11,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 import random
-from datetime import datetime
+import time
 # -----------------------------------------------------------------------------------------------
 app = Flask(__name__)
 # -----------------------------------------------------------------------------------------------
@@ -136,6 +136,35 @@ def handle_message(event):
         else:
             cur_text = f'沒有星期{txt[2:-2]}'
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
+
+    if line_text == "下一節":
+        t = time.localtime()
+        wek = t.tm_wday + 1
+        th = t.tm_hour
+        tm = t.tm_min
+        if wek <= 5:
+            if 6 <= th <= 17:
+                if th == 6 or th == 7 or (th == 8 and tm <= 10):
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=wek_curriculum[wek-1][0])
+                elif th == 8 and tm >= 10:
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=wek_curriculum[wek-1][1])
+                elif th == 9:
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=(wek_curriculum[wek-1][2])
+                elif th == 10:
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=wek_curriculum[wek-1][3])
+                elif th == 11:
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=wek_curriculum[wek-1][4])
+                elif th == 12:
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=wek_curriculum[wek-1][5])
+                elif th == 13 or (th == 14 and tm <= 10):
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=wek_curriculum[wek-1][6])
+                elif th == 14:
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=wek_curriculum[wek-1][7])
+                elif th == 15:
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=wek_curriculum[wek-1][8])
+
+        else:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放假啦')
 
 
 
