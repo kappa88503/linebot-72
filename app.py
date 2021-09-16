@@ -116,8 +116,13 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=ran_ran))
 
     if line_text.lower() == "test":
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
-
+        # line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
+        t = time.localtime()
+        wek = t.tm_wday + 1
+        th = t.tm_hour
+        tm = t.tm_min
+        tt = f'{wek},{th},{tm}'
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=tt))
     if ('星期' in line_text or '禮拜' in line_text) and '課表' in line_text:
 
         txt = list(line_text)
