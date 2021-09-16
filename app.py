@@ -1,7 +1,7 @@
 # app.py
 import random
 import time
-
+from datetime import datetime,timezone,timedelta
 from flask import Flask, request, abort
 from linebot import (
     LineBotApi, WebhookHandler
@@ -117,10 +117,11 @@ def handle_message(event):
 
     if line_text.lower() == "test":
         # line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
-        t = time.localtime()
-        wek = t.tm_wday + 1
-        th = t.tm_hour
-        tm = t.tm_min
+        UTC_0 = datetime.utcnow().replace(tzinfo=timezone.utc)
+        UTC_8 = UTC_0.astimezone(timezone(timedelta(hours=8))) # 轉換時區到UTC+8
+        wek = UTC_8.tm_wday + 1
+        th = UTC_8.tm_hour
+        tm = UTC_8.tm_min
         tt = f'{wek},{th},{tm}'
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=tt))
     if ('星期' in line_text or '禮拜' in line_text) and '課表' in line_text:
