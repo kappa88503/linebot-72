@@ -119,9 +119,9 @@ def handle_message(event):
         # line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
         UTC_0 = datetime.utcnow().replace(tzinfo=timezone.utc)
         UTC_8 = UTC_0.astimezone(timezone(timedelta(hours=8))) # 轉換時區到UTC+8
-        wek = UTC_8.tm_wday + 1
-        th = UTC_8.tm_hour
-        tm = UTC_8.tm_min
+        wek = UTC_8.weekday() + 1
+        th = UTC_8.hour
+        tm = UTC_8.minute
         tt = f'{wek},{th},{tm}'
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=tt))
     if ('星期' in line_text or '禮拜' in line_text) and '課表' in line_text:
