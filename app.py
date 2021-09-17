@@ -169,6 +169,9 @@ def handle_message(event):
                     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=wek_curriculum[wek - 1][7]))
                 elif th == 15:
                     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=wek_curriculum[wek - 1][8]))
+                else:
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放學啦'))
+
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放學啦'))
         else:
