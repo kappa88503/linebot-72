@@ -120,7 +120,9 @@ def handle_message(event):
     if ('星期' in line_text or '禮拜' in line_text) and '課表' in line_text:
 
         txt = list(line_text)
-        if txt[2] == '一':
+        if len(txt) != 5:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='請輸入要查詢禮拜幾的課表'))
+        elif txt[2] == '一':
             cur_text = '\n'.join(wek_curriculum[0])
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
         elif txt[2] == '二':
