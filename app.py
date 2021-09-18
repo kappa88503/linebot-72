@@ -1,9 +1,8 @@
 # app.py
 import random
-# import time
+import time
 import pinyin
-from datetime import datetime, timezone, timedelta
-
+from datetime import datetime,timezone,timedelta
 from flask import Flask, request, abort
 from linebot import (
     LineBotApi, WebhookHandler
@@ -112,12 +111,15 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=mora_txt))
 
     if '不要問選一個 ' in line_text:
-        line_text = line_text.replace('不要問選一個 ', '')
-        ran_ran = line_text.split('/')
+        event.message.text = event.message.text.replace('不要問選一個 ', '')
+        ran_ran = event.message.text.split('/')
         ran_ran = f'我選 {random.choice(ran_ran)}'
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=ran_ran))
 
+    if line_text.lower() == "test":
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
     if ('星期' in line_text or '禮拜' in line_text) and '課表' in line_text:
+
         txt = list(line_text)
         if len(txt) != 5:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text='請輸入要查詢禮拜幾的課表'))
@@ -142,13 +144,12 @@ def handle_message(event):
         else:
             cur_text = f'沒有星期{txt[2:-2]}'
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
-
     if line_text == '下一節':
-        utc_0 = datetime.utcnow().replace(tzinfo=timezone.utc)
-        utc_8 = utc_0.astimezone(timezone(timedelta(hours=8)))  # 轉換時區到UTC+8
-        wek = utc_8.weekday() + 1
-        th = utc_8.hour
-        tm = utc_8.minute
+        UTC_0 = datetime.utcnow().replace(tzinfo=timezone.utc)
+        UTC_8 = UTC_0.astimezone(timezone(timedelta(hours=8))) # 轉換時區到UTC+8
+        wek = UTC_8.weekday() + 1
+        th = UTC_8.hour
+        tm = UTC_8.minute
         if wek <= 5:
             if 6 <= th <= 17:
                 if th == 6 or th == 7 or (th == 8 and tm <= 10):
@@ -176,15 +177,11 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放學啦'))
         else:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放假啦'))
-'''            
-    if '@拼音 ' in line_text:
-        line_text = line_text.replace('@拼音 ', '')
-        txt = pinyin.get(f'{line_text}', delimiter=' ', format='strip')
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放假啦'))
-'''
-    if line_text.lower() == "test":
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
+    if '@拼音 ' in line_text:
+            line_text = line_text.replace('@拼音 ', '')
+            txt = pinyin.get(f'{line_text}', delimiter=' ', format='strip')
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放假啦'))
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run()
