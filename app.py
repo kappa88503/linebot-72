@@ -2,7 +2,7 @@
 import random
 import time
 import pinyin
-import sqlite3
+# import sqlite3
 from datetime import datetime,timezone,timedelta
 from flask import Flask, request, abort
 from linebot import (
@@ -183,15 +183,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
 
     if line_text.lower() == "test":
-        # line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
-        db_file = 'sql.db'
-        conn = sqlite3.connect(db_file)
-        sql = 'select * from note'
-        cur = conn.cursor()
-        cur.execute(sql)
-        txt = cur.fetchall()
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
-        conn.close()
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
