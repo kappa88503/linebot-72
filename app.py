@@ -176,12 +176,12 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放學啦'))
         else:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放假啦'))
-            
+'''            
     if '@拼音 ' in line_text:
         line_text = line_text.replace('@拼音 ', '')
         txt = pinyin.get(f'{line_text}', delimiter=' ', format='strip')
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放假啦'))
-
+'''
     if line_text.lower() == "test":
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
