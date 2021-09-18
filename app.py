@@ -181,7 +181,7 @@ def handle_message(event):
     if '@拼音 ' in line_text:
             line_text = line_text.replace('@拼音 ', '')
             txt = pinyin.get(f'{line_text}', delimiter=' ', format='strip')
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放假啦'))
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run()
