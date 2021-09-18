@@ -2,6 +2,7 @@
 import random
 import time
 import pinyin
+import sqlite3
 from datetime import datetime,timezone,timedelta
 from flask import Flask, request, abort
 from linebot import (
@@ -116,8 +117,6 @@ def handle_message(event):
         ran_ran = f'我選 {random.choice(ran_ran)}'
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=ran_ran))
 
-    if line_text.lower() == "test":
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
     if ('星期' in line_text or '禮拜' in line_text) and '課表' in line_text:
 
         txt = list(line_text)
@@ -179,9 +178,21 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text='放假啦'))
 
     if '@拼音 ' in line_text:
-            line_text = line_text.replace('@拼音 ', '')
-            txt = pinyin.get(f'{line_text}', delimiter=' ', format='strip')
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
+        line_text = line_text.replace('@拼音 ', '')
+        txt = pinyin.get(f'{line_text}', delimiter=' ', format='strip')
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
+
+    if line_text.lower() == "test":
+        # line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
+        db_file = 'sql.db'
+        conn = sqlite3.connect(db_file)
+        sql = 'select * from note'
+        cur = conn.cursor()
+        cur.execute(sql)
+        txt = cur.fetchall()
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
+        conn.close()
+
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run()
