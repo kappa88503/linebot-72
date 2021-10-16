@@ -186,12 +186,6 @@ def handle_message(event):
 
     if line_text.lower() == "test":
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
-    if line_text == '#text StylisticEwe72 604673':
-        txt = ''
-        for i in range(len(toto_text)):
-            t = toto_text[i] + '\n'
-            txt += t
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
 
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
