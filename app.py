@@ -2,7 +2,7 @@
 import random
 import time
 import pinyin
-# import sqlite3 test
+# import sqlite3
 from datetime import datetime,timezone,timedelta
 from flask import Flask, request, abort
 from linebot import (
@@ -32,7 +32,7 @@ wek_curriculum = [['跑班選修', '跑班選修', '跑班選修', '跑班選修
                   ['英文作文', '體育', '綜合活動', '綜合活動', '午休', '選化三', '跑班選修', '跑班選修', '放學啦']]
 
 # -----------------------------------------------------------------------------------------------
-al = []
+
 # -----------------------------------------------------------------------------------------------
 @app.route("/callback", methods=['POST'])
 def callback():
