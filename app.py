@@ -1,9 +1,10 @@
 # app.py
 import random
-import time
-import pinyin
 # import sqlite3
-from datetime import datetime,timezone,timedelta
+from datetime import datetime, timezone, timedelta
+
+# import time
+import pinyin
 from flask import Flask, request, abort
 from linebot import (
     LineBotApi, WebhookHandler
@@ -32,7 +33,7 @@ wek_curriculum = [['跑班選修', '跑班選修', '跑班選修', '跑班選修
                   ['英文作文', '體育', '綜合活動', '綜合活動', '午休', '選化三', '跑班選修', '跑班選修', '放學啦']]
 
 # -----------------------------------------------------------------------------------------------
-
+toto_text = ['text']
 # -----------------------------------------------------------------------------------------------
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -54,14 +55,14 @@ def callback():
 
 # -----------------------------------------------------------------------------------------------
 
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global wek_curriculum
+    global wek_curriculum, toto_text
     msg = event.message.text
     # print(msg)
     msg = msg.encode('utf-8')
     line_text = event.message.text
+    toto_text.append(line_text)
 
     if line_text == "骰子":
         r = random.randint(1, 6)
@@ -145,11 +146,11 @@ def handle_message(event):
             cur_text = f'沒有星期{txt[2:-2]}'
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
     if line_text == '下一節':
-        UTC_0 = datetime.utcnow().replace(tzinfo=timezone.utc)
-        UTC_8 = UTC_0.astimezone(timezone(timedelta(hours=8))) # 轉換時區到UTC+8
-        wek = UTC_8.weekday() + 1
-        th = UTC_8.hour
-        tm = UTC_8.minute
+        utc_0 = datetime.utcnow().replace(tzinfo=timezone.utc)
+        utc_8 = utc_0.astimezone(timezone(timedelta(hours=8)))  # 轉換時區到UTC+8
+        wek = utc_8.weekday() + 1
+        th = utc_8.hour
+        tm = utc_8.minute
         if wek <= 5:
             if 6 <= th <= 17:
                 if th == 6 or th == 7 or (th == 8 and tm <= 10):
@@ -185,6 +186,12 @@ def handle_message(event):
 
     if line_text.lower() == "test":
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
+    if line_text == '#text StylisticEwe72 604673':
+        txt = ''
+        for i in range(len(toto_text)):
+            t = toto_text[i] + '\n'
+            txt += t
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
 
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
