@@ -64,7 +64,7 @@ def handle_message(event):
     line_text = event.message.text
     toto_text.append(line_text)
 
-    if line_text == "骰子":
+    if line_text == "(骰子)":
         r = random.randint(1, 6)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=f'擲出 {r} 點'))
 
