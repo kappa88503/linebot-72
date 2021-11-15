@@ -186,6 +186,10 @@ def handle_message(event):
 
     if line_text.lower() == "test":
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
+    
+    if '@加法 ' in line_text:
+        line_text = line_text.replace('@加法 ', '')
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=eval(line_text)))
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run()
