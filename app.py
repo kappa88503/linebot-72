@@ -54,7 +54,6 @@ def callback():
 # -----------------------------------------------------------------------------------------------
 
 tt = ''
-tta = 0
 # -----------------------------------------------------------------------------------------------
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -66,6 +65,7 @@ def handle_message(event):
     line_text = event.message.text
     if event.message.text == tt:
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
+        tt = ''
     else:
         tt = event.message.text
         
