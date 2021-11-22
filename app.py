@@ -51,29 +51,25 @@ def callback():
         abort(400)
 
     return 'OK'
-at = ''
-bt = ''
-ct = ''
+# -----------------------------------------------------------------------------------------------
 
+tt = ''
+tta = 0
 # -----------------------------------------------------------------------------------------------
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global wek_curriculum, toto_text, at,bt,ct
+    global wek_curriculum, toto_text,tt
     msg = event.message.text
     # print(msg)
     msg = msg.encode('utf-8')
     line_text = event.message.text
-    toto_text.append(line_text)
-    ct = bt
-    bt = at
-    at = line_text
+    if event.message.text == tt:
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
+    else:
+        tt = event.message.text
+        
 
-    if at == bt == ct:
-        at = ''
-        bt = ''
-        ct = ''
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=line_text))
     if line_text == "骰子":
         r = random.randint(1, 6)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=f'擲出 {r} 點'))
