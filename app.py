@@ -191,7 +191,8 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
 
     if line_text.lower() == "test":
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
+        line_bot_api.reply_message(event.reply_token,StickerSendMessage(package_id=1, sticker_id=2))
+        # line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
     
     if '@算術 ' in line_text:
         line_text = line_text.replace('@算術 ', '')
