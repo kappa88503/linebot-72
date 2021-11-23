@@ -191,7 +191,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
 
     if line_text.lower() == "test":
-        line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://www.google.com/url?sa=i&url=https%3A%2F%2Fdigiphoto.techbang.com%2Fposts%2F9937-five-ways-to-easily-improve-our-landscape-photography&psig=AOvVaw0mD66odLYp6L1IE3GPkVsP&ust=1637759688277000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCLCGkbbIrvQCFQAAAAAdAAAAABAD', preview_image_url='https://www.google.com/url?sa=i&url=https%3A%2F%2Fdigiphoto.techbang.com%2Fposts%2F9937-five-ways-to-easily-improve-our-landscape-photography&psig=AOvVaw0mD66odLYp6L1IE3GPkVsP&ust=1637759688277000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCLCGkbbIrvQCFQAAAAAdAAAAABAD'))
+        line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://d25tv1xepz39hi.cloudfront.net/2020-01-09/files/canon-landscape-photography-preparation-tips_1968-1s.jpg', preview_image_url='https://d25tv1xepz39hi.cloudfront.net/2020-01-09/files/canon-landscape-photography-preparation-tips_1968-1s.jpg'))
         # line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
     
     if '@算術 ' in line_text:
