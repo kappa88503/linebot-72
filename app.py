@@ -191,8 +191,8 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
 
     if line_text.lower() == "test":
-        #line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://d25tv1xepz39hi.cloudfront.net/2020-01-09/files/canon-landscape-photography-preparation-tips_1968-1s.jpg', preview_image_url='https://d25tv1xepz39hi.cloudfront.net/2020-01-09/files/canon-landscape-photography-preparation-tips_1968-1s.jpg'))
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
+        line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://imgur.com/7GR841j', preview_image_url='https://imgur.com/7GR841j'))
+        #line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
     
     if '@算術 ' in line_text:
         line_text = line_text.replace('@算術 ', '')
