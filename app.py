@@ -197,6 +197,12 @@ def handle_message(event):
     if '@算術 ' in line_text:
         line_text = line_text.replace('@算術 ', '')
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=eval(line_text)))
+        
+    if '@隨機數' in line_text:
+        line_text = line_text.replace('@隨機數 ', '')
+        t1,t2 = map(int, input().split("~"))
+        line_text = random.randint(t1,t2)
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=line_text))
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run()
