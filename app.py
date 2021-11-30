@@ -191,7 +191,9 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
 
     if line_text.lower() == "test":
-        line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://imgur.com/7GR841j.png', preview_image_url='https://imgur.com/7GR841j.png'))
+        uid = event.source.user_id
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=uid))
+        #line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://imgur.com/7GR841j.png', preview_image_url='https://imgur.com/7GR841j.png'))
         #line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
     
     if '@算術 ' in line_text:
