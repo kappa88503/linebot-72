@@ -12,10 +12,8 @@ from linebot import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
-)
 from linebot.models import *
+
 # -----------------------------------------------------------------------------------------------
 app = Flask(__name__)
 # -----------------------------------------------------------------------------------------------
@@ -33,8 +31,6 @@ wek_curriculum = [['跑班選修', '跑班選修', '跑班選修', '跑班選修
                   ['英文作文', '體育', '綜合活動', '綜合活動', '午休', '選化三', '跑班選修', '跑班選修', '放學啦']]
 
 # -----------------------------------------------------------------------------------------------
-toto_text = ['text']
-# -----------------------------------------------------------------------------------------------
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -51,14 +47,18 @@ def callback():
         abort(400)
 
     return 'OK'
+
+
 # -----------------------------------------------------------------------------------------------
 
 tt = ''
+
+
 # -----------------------------------------------------------------------------------------------
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global wek_curriculum, toto_text,tt
+    global wek_curriculum, tt
     msg = event.message.text
     # print(msg)
     msg = msg.encode('utf-8')
@@ -68,7 +68,6 @@ def handle_message(event):
         tt = ''
     else:
         tt = event.message.text
-        
 
     if line_text == "骰子":
         r = random.randint(1, 6)
@@ -197,14 +196,15 @@ def handle_message(event):
 
     if line_text.lower() == "test":
         uid = event.source.user_id
-        profile = list(line_bot_api.get_profile(uid))
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile[0]))
-        #line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://imgur.com/7GR841j.png', preview_image_url='https://imgur.com/7GR841j.png'))
-        #line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
-    
+        try:
+            profile = line_bot_api.get_profile(uid)
+        except:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='Error'))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=str(profile)))
+        # line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://imgur.com/7GR841j.png', preview_image_url='https://imgur.com/7GR841j.png'))
+        # line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
-        
-    
+
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run()
