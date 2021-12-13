@@ -2,7 +2,6 @@
 import random
 # import sqlite3
 from datetime import datetime, timezone, timedelta
-
 # import time
 import pinyin
 from flask import Flask, request, abort
@@ -188,7 +187,9 @@ def handle_message(event):
 
     if line_text == 'uid':
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.source.user_id))
-
+    if line_text == 'gid':
+        Group_ID = TextMessage(text=event.source.group_id)
+        line_bot_api.reply_message(event.reply_token, Group_ID)
     if line_text.lower() == "test":
         uid = event.source.user_id
         profile = line_bot_api.get_profile(uid)
