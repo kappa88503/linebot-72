@@ -56,10 +56,9 @@ def callback():
 def handle_message(event):
     global wek_curriculum
 
-
-    msg = event.message.text
+    # msg = event.message.text
     # print(msg)
-    msg = msg.encode('utf-8')
+    # msg = msg.encode('utf-8')
     line_text = event.message.text
 
     if line_text == "骰子":
@@ -186,6 +185,9 @@ def handle_message(event):
     if '@算術 ' in line_text:
         line_text = line_text.replace('@算術 ', '')
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=eval(line_text)))
+
+    if line_text == 'uid':
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.source.user_id))
 
     if line_text.lower() == "test":
         uid = event.source.user_id
