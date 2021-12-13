@@ -151,6 +151,7 @@ def handle_message(event):
         else:
             cur_text = f'沒有星期{txt[2:-2]}'
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
+
     if line_text == '下一節':
         utc_0 = datetime.utcnow().replace(tzinfo=timezone.utc)
         utc_8 = utc_0.astimezone(timezone(timedelta(hours=8)))  # 轉換時區到UTC+8
@@ -190,15 +191,18 @@ def handle_message(event):
         txt = pinyin.get(f'{line_text}', delimiter=' ', format='strip')
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=txt))
 
-    if line_text.lower() == "test":
-        uid = event.source.user_id
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=uid))
-        #line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://imgur.com/7GR841j.png', preview_image_url='https://imgur.com/7GR841j.png'))
-        #line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
-    
     if '@算術 ' in line_text:
         line_text = line_text.replace('@算術 ', '')
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=eval(line_text)))
+
+    if line_text.lower() == "test":
+        uid = event.source.user_id
+        profile = line_bot_api.get_profile(uid)
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile))
+        #line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://imgur.com/7GR841j.png', preview_image_url='https://imgur.com/7GR841j.png'))
+        #line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
+    
+
         
     
 # -----------------------------------------------------------------------------------------------
