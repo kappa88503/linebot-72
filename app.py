@@ -63,7 +63,7 @@ def handle_message(event):
     try:
         profile = line_bot_api.get_profile(uid)
     except:
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='Error'))
+        pass
     msg = event.message.text
     # print(msg)
     msg = msg.encode('utf-8')
