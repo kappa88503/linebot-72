@@ -197,7 +197,7 @@ def handle_message(event):
 
     if line_text.lower() == "test":
         uid = event.source.user_id
-        profile = line_bot_api.get_profile(f'{uid}')
+        profile = line_bot_api.get_profile(uid)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=str(profile)))
         #line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://imgur.com/7GR841j.png', preview_image_url='https://imgur.com/7GR841j.png'))
         #line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
