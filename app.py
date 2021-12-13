@@ -189,7 +189,10 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.source.user_id))
     if line_text == 'gid':
         Group_ID = TextMessage(text=event.source.group_id)
-        line_bot_api.reply_message(event.reply_token, Group_ID)
+        if Group_ID == False:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='no'))
+        else:
+            line_bot_api.reply_message(event.reply_token, Group_ID)
     if line_text.lower() == "test":
         uid = event.source.user_id
         profile = line_bot_api.get_profile(uid)
