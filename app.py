@@ -30,6 +30,7 @@ wek_curriculum = [['跑班選修', '跑班選修', '跑班選修', '跑班選修
                   ['數學甲', '國語文', '跑班選修', '跑班選修', '午休', '英語文', '選物四', '選化五-1', '放學啦'],
                   ['英文作文', '體育', '綜合活動', '綜合活動', '午休', '選化三', '跑班選修', '跑班選修', '放學啦']]
 
+
 # -----------------------------------------------------------------------------------------------
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -51,29 +52,15 @@ def callback():
 
 # -----------------------------------------------------------------------------------------------
 
-tt = ''
-
-
-# -----------------------------------------------------------------------------------------------
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global wek_curriculum, tt
-    uid = event.source.user_id
-    try:
-        profile = line_bot_api.get_profile(uid)
-    except:
-        pass
+    global wek_curriculum
+
+
     msg = event.message.text
     # print(msg)
     msg = msg.encode('utf-8')
     line_text = event.message.text
-
-    if event.message.text == tt:
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
-        tt = ''
-    else:
-        tt = event.message.text
 
     if line_text == "骰子":
         r = random.randint(1, 6)
@@ -201,7 +188,9 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=eval(line_text)))
 
     if line_text.lower() == "test":
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text = profile.display_name))
+        uid = event.source.user_id
+        profile = line_bot_api.get_profile(uid)
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile.display_name))
         # line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
 
