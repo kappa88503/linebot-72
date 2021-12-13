@@ -59,10 +59,16 @@ tt = ''
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global wek_curriculum, tt
+    uid = event.source.user_id
+    try:
+        profile = line_bot_api.get_profile(uid)
+    except:
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='Error'))
     msg = event.message.text
     # print(msg)
     msg = msg.encode('utf-8')
     line_text = event.message.text
+
     if event.message.text == tt:
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
         tt = ''
@@ -195,13 +201,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=eval(line_text)))
 
     if line_text.lower() == "test":
-        uid = event.source.user_id
-        try:
-            profile = line_bot_api.get_profile(uid)
-        except:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='Error'))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text = profile.display_name))
-        # line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://imgur.com/7GR841j.png', preview_image_url='https://imgur.com/7GR841j.png'))
         # line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
 
