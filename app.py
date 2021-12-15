@@ -185,19 +185,18 @@ def handle_message(event):
         line_text = line_text.replace('@算術 ', '')
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=eval(line_text)))
 
-    if line_text == 'uid':
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.source.user_id))
-    if line_text == 'gid':
-        Group_ID = TextMessage(text=event.source.group_id)
-        if Group_ID == '':
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='no'))
-        else:
-            line_bot_api.reply_message(event.reply_token, Group_ID)
+    if line_text == 'name':
+        user_id = event.source.user_id
+        group_id = event.source.group_id
+        try:
+            profile = line_bot_api.get_group_member_profile(group_id, user_id)
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile.display_name))
+        except:
+            profile = line_bot_api.get_group_member_profile(user_id)
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile.display_name))
+
     if line_text.lower() == "test":
-        uid = event.source.user_id
-        profile = line_bot_api.get_profile(uid)
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile.display_name))
-        # line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
 
 # -----------------------------------------------------------------------------------------------
