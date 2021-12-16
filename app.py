@@ -204,6 +204,8 @@ def handle_message(event):
         if (profile.display_name == 'Henry Wang' or profile.display_name == '王政揚' or profile.display_name == '林家名' or profile.display_name == '緯') and m == 2:
             t = random.choice(suject)
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=f'{t}大佬'))
+        if profile.display_name == '羅翊帆' and m == 2:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=f'{profile.display_name} 黑人'))
 
 
 # -----------------------------------------------------------------------------------------------
