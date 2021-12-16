@@ -188,15 +188,18 @@ def handle_message(event):
     if line_text == 'name':
         user_id = event.source.user_id
         group_id = event.source.group_id
-        try:
-            profile = line_bot_api.get_group_member_profile(group_id, user_id)
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile.display_name))
-        except:
-            profile = line_bot_api.get_group_member_profile(user_id)
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile.display_name))
+        profile = line_bot_api.get_group_member_profile(group_id, user_id)
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile.display_name))
 
     if line_text.lower() == "test":
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
+
+    if line_text:
+        user_id = event.source.user_id
+        group_id = event.source.group_id
+        profile = line_bot_api.get_group_member_profile(group_id, user_id)
+        if profile.display_name == 'Henry Wang':
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text = '國文大佬'))
 
 
 # -----------------------------------------------------------------------------------------------
