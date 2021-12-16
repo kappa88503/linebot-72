@@ -2,6 +2,7 @@
 import random
 # import sqlite3
 from datetime import datetime, timezone, timedelta
+
 # import time
 import pinyin
 from flask import Flask, request, abort
@@ -198,8 +199,11 @@ def handle_message(event):
         user_id = event.source.user_id
         group_id = event.source.group_id
         profile = line_bot_api.get_group_member_profile(group_id, user_id)
-        if profile.display_name == 'Henry Wang':
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text = '國文大佬'))
+        suject = ['國文', '英文', '數學', '自然', '音樂']
+        m = random.randint(1, 6)
+        if (profile.display_name == 'Henry Wang' or profile.display_name == '王政揚' or profile.display_name == '林家名') and m == 3:
+            t = random.choice(suject)
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=f'{t}大佬'))
 
 
 # -----------------------------------------------------------------------------------------------
