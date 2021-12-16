@@ -201,7 +201,7 @@ def handle_message(event):
         profile = line_bot_api.get_group_member_profile(group_id, user_id)
         suject = ['國文', '英文', '數學', '自然', '音樂']
         m = random.randint(1, 3)
-        if (profile.display_name == 'Henry Wang' or profile.display_name == '王政揚' or profile.display_name == '林家名') and m == 2:
+        if (profile.display_name == 'Henry Wang' or profile.display_name == '王政揚' or profile.display_name == '林家名' or profile.display_name == '緯') and m == 2:
             t = random.choice(suject)
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=f'{t}大佬'))
 
