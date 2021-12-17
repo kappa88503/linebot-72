@@ -195,18 +195,6 @@ def handle_message(event):
     if line_text.lower() == "test":
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
-    if line_text:
-        user_id = event.source.user_id
-        group_id = event.source.group_id
-        profile = line_bot_api.get_group_member_profile(group_id, user_id)
-        suject = ['國文', '英文', '數學', '自然', '音樂', '社會']
-        m = random.randint(1, 3)
-        name = profile.display_name
-        name_list = ['Henry Wang','王政揚', '林家名', '緯']
-        if (name in name_list) and m == 2:
-            t = random.choice(suject)
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=f'{profile.display_name} 是{t}大佬'))
-
 
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
