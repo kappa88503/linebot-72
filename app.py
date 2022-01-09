@@ -3,7 +3,7 @@ import random
 # import sqlite3
 from datetime import datetime, timezone, timedelta
 
-# import time
+import time
 import pinyin
 from flask import Flask, request, abort
 from linebot import (
@@ -194,6 +194,7 @@ def handle_message(event):
 
 
     if line_text.lower() == "test":
+        time.sleep(10)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
 
