@@ -117,25 +117,30 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=ran_ran))
 
     if ('星期' in line_text or '禮拜' in line_text) and '課表' in line_text:
-        cur_text = f'{line_text}\n'
+        cur_text = [TextSendMessage(text=f'{line_text} ⬇')]
         txt = list(line_text)
         if len(txt) != 5:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text='請輸入要查詢禮拜幾的課表'))
         elif txt[2] == '一':
-            cur_text += '\n'.join(wek_curriculum[0])
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
+            cur = '\n'.join(wek_curriculum[0])
+            cur_text.append(TextSendMessage(text=cur))
+            line_bot_api.reply_message(event.reply_token, cur_text)
         elif txt[2] == '二':
-            cur_text += '\n'.join(wek_curriculum[1])
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
+            cur = '\n'.join(wek_curriculum[1])
+            cur_text.append(TextSendMessage(text=cur))
+            line_bot_api.reply_message(event.reply_token, cur_text)
         elif txt[2] == '三':
-            cur_text += '\n'.join(wek_curriculum[2])
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
+            cur = '\n'.join(wek_curriculum[2])
+            cur_text.append(TextSendMessage(text=cur))
+            line_bot_api.reply_message(event.reply_token, cur_text)
         elif txt[2] == '四':
-            cur_text += '\n'.join(wek_curriculum[3])
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
+            cur = '\n'.join(wek_curriculum[3])
+            cur_text.append(TextSendMessage(text=cur))
+            line_bot_api.reply_message(event.reply_token, cur_text)
         elif txt[2] == '五':
-            cur_text += '\n'.join(wek_curriculum[4])
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
+            cur = '\n'.join(wek_curriculum[4])
+            cur_text.append(TextSendMessage(text=cur))
+            line_bot_api.reply_message(event.reply_token, cur_text)
         elif txt[2] == '六' or txt[2] == '日':
             cur_text = '放假啦'
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cur_text))
