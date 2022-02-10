@@ -3,7 +3,7 @@ import random
 # import sqlite3
 from datetime import datetime, timezone, timedelta
 
-# import time
+import time
 import pinyin
 from flask import Flask, request, abort
 from linebot import (
@@ -48,7 +48,7 @@ def callback():
         abort(400)
 
     return 'OK'
-
+# -----------------------------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------------------------
 
@@ -186,13 +186,15 @@ def handle_message(event):
         line_text = line_text.replace('@算術 ', '')
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=eval(line_text)))
 
-    if line_text == 'name':
+    if line_text.lower() == 'name':
         user_id = event.source.user_id
         group_id = event.source.group_id
         profile = line_bot_api.get_group_member_profile(group_id, user_id)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile.display_name))
 
+
     if line_text.lower() == "test":
+        time.sleep(10)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
 
