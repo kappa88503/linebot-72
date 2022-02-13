@@ -230,7 +230,7 @@ def handle_message(event):
             conn.commit()
             cursor.close()
             line_bot_api.reply_message(event.reply_token,
-                                       TextSendMessage(text=f'line id = {user_data[1]}\n name = {user_data[2]}'))
+                                       TextSendMessage(text=f'line id = {user_data[1]}\nname = {user_data[2]}'))
         except:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text='失敗'))
 
