@@ -220,7 +220,21 @@ def handle_message(event):
         except psycopg2.errors.NotNullViolation:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text='@註冊 [名字]'))
 
-
+    if '@查詢 ' in line_text:
+        line_text = line_text.replace('@查詢 ', '')
+        user_id = event.source.user_id
+        group_id = event.source.group_id
+        profile = line_bot_api.get_group_member_profile(group_id, user_id)
+        username = profile.display_name
+        try:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM userdata WHERE userid=%s;",(user_id))
+            user_data = cursor.fetchone()
+            conn.commit()
+            cursor.close()
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=f'line id = {user_data[1]}\n name = {user_data[2]}'))
+        except:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='失敗'))
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run()
