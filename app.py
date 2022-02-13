@@ -215,8 +215,8 @@ def handle_message(event):
             conn.commit()
             cursor.close()
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text='成功'))
-        except psycopg2.errors.UniqueViolation:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='已註冊'))
+        except:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='失敗'))
 
     if line_text == '@查詢':
         user_id = event.source.user_id
@@ -231,8 +231,6 @@ def handle_message(event):
             cursor.close()
             line_bot_api.reply_message(event.reply_token,
                                        TextSendMessage(text=f'line id = {user_data[1]}\nname = {user_data[2]}'))
-        except:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='失敗'))
 
 
 # -----------------------------------------------------------------------------------------------
