@@ -204,20 +204,7 @@ def handle_message(event):
         time.sleep(10)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
-    if '@註冊 ' in line_text:
-        line_text = line_text.replace('@註冊 ', '')
-        user_id = event.source.user_id
-        group_id = event.source.group_id
-        profile = line_bot_api.get_group_member_profile(group_id, user_id)
-        username = profile.display_name
-        try:
-            cursor = conn.cursor()
-            cursor.execute("INSERT INTO userdata (userid, username, name) VALUES (%s, %s, %s);",(user_id, username, line_text))
-            conn.commit()
-            cursor.close()
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='成功'))
-        except:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='失敗'))
+
 
 
 # -----------------------------------------------------------------------------------------------
