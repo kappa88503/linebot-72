@@ -201,7 +201,6 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile.display_name))
 
     if line_text.lower() == "test":
-        time.sleep(10)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
     if '@註冊 ' in line_text:
