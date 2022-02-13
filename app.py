@@ -1,10 +1,10 @@
 # app.py
 import random
-# import sqlite3
+import time
 from datetime import datetime, timezone, timedelta
 
-import time
 import pinyin
+import psycopg2
 from flask import Flask, request, abort
 from linebot import (
     LineBotApi, WebhookHandler
@@ -21,7 +21,6 @@ line_bot_api = LineBotApi(
     'vpVg86tVKnbsIFw2JlicqbxPhzIeD246B5asVzbwMBCaalUGr5rdb1ghL5SeJeD+mJAWgqzH+QGDL76KA6Ns7uyPjK57WhartmXtxcZFxeOaB14PyEp6ITfKRguKnBSQswi+5kQixxzWvx0VLNdk4QdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('ed9c515dac10991c798d4e2a559fa667')
 # -----------------------------------------------------------------------------------------------
-# def
 
 # -----------------------------------------------------------------------------------------------
 wek_curriculum = [['英文閱寫', '體育', '跑班選修', '跑班選修', '午休', '選修物理五', '閱讀與研究', '遠征式課程', '放學啦'],
@@ -48,17 +47,21 @@ def callback():
         abort(400)
 
     return 'OK'
+
+
 # -----------------------------------------------------------------------------------------------
+conn = psycopg2.connect(database="d58bk1bhneu5t2",
+                        user="inzyymgreqkfoh",
+                        password="ae71e368bf350b8b9373aa0ab669ba07fa74e07444d74fcd824f72342180ea21",
+                        host="ec2-54-235-45-88.compute-1.amazonaws.com",
+                        port="5432")
+
 
 # -----------------------------------------------------------------------------------------------
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global wek_curriculum
-
-    # msg = event.message.text
-    # print(msg)
-    # msg = msg.encode('utf-8')
     line_text = event.message.text
 
     if line_text == "骰子":
@@ -197,10 +200,21 @@ def handle_message(event):
         profile = line_bot_api.get_group_member_profile(group_id, user_id)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile.display_name))
 
-
     if line_text.lower() == "test":
         time.sleep(10)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
+
+    if '@註冊 ' in line_text:
+        line_text = line_text.replace('@註冊 ', '')
+        user_id = event.source.user_id
+        group_id = event.source.group_id
+        profile = line_bot_api.get_group_member_profile(group_id, user_id)
+        username = profile.display_name
+
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO userdata (userid, username, name) VALUES (%s, %s, %s);",(user_id, username, line_text))
+        conn.commit()
+        cursor.close()
 
 
 # -----------------------------------------------------------------------------------------------
