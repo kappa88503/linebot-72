@@ -1,6 +1,5 @@
 # app.py
 import random
-import time
 from datetime import datetime, timezone, timedelta
 
 import pinyin
@@ -211,12 +210,15 @@ def handle_message(event):
         username = profile.display_name
         try:
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO userdata (userid, username, name) VALUES (%s, %s, %s);",(user_id, username, line_text))
+            cursor.execute("INSERT INTO userdata (userid, username, name) VALUES (%s, %s, %s);",
+                           (user_id, username, line_text))
             conn.commit()
             cursor.close()
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text='成功'))
-        except:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='失敗'))
+        except psycopg2.errors.UniqueViolation:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='已註冊'))
+        except psycopg2.errors.NotNullViolation:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='@註冊 [名字]'))
 
 
 # -----------------------------------------------------------------------------------------------
