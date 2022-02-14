@@ -218,6 +218,8 @@ def handle_message(event):
                 conn.commit()
                 cursor.close()
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text='成功'))
+            except psycopg2.errors.UniqueViolation:
+                line_bot_api.reply_message(event.reply_token, TextSendMessage(text='已註冊'))
             except:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text='失敗'))
 
