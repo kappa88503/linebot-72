@@ -230,6 +230,17 @@ def handle_message(event):
         conn.commit()
         cursor.close()
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=f'line id = {user_data[1]}\nname = {user_data[2]}'))
+
+    if '@改名 ' in line_text:
+        line_text = line_text.replace('@改名 ', '')
+        user_id = event.source.user_id
+
+        cursor = conn.cursor()
+        cursor.execute("UPDATE userdata SET name = %s WHERE userid = %s",(line_text, user_id))
+        conn.commit()
+        cursor.close()
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='成功'))
+
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run()
