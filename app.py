@@ -204,19 +204,22 @@ def handle_message(event):
 
     if '@註冊 ' in line_text:
         line_text = line_text.replace('@註冊 ', '')
-        user_id = event.source.user_id
-        group_id = event.source.group_id
-        profile = line_bot_api.get_group_member_profile(group_id, user_id)
-        username = profile.display_name
-        try:
-            cursor = conn.cursor()
-            cursor.execute("INSERT INTO userdata (userid, username, name) VALUES (%s, %s, %s);",
-                           (user_id, username, line_text))
-            conn.commit()
-            cursor.close()
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='成功'))
-        except:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='失敗'))
+        if line_text == '':
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='姓名請勿為空'))
+        else:
+            user_id = event.source.user_id
+            group_id = event.source.group_id
+            profile = line_bot_api.get_group_member_profile(group_id, user_id)
+            username = profile.display_name
+            try:
+                cursor = conn.cursor()
+                cursor.execute("INSERT INTO userdata (userid, username, name) VALUES (%s, %s, %s);",
+                               (user_id, username, line_text))
+                conn.commit()
+                cursor.close()
+                line_bot_api.reply_message(event.reply_token, TextSendMessage(text='成功'))
+            except:
+                line_bot_api.reply_message(event.reply_token, TextSendMessage(text='失敗'))
 
     if line_text == '@查詢':
         user_id = event.source.user_id
@@ -233,13 +236,15 @@ def handle_message(event):
 
     if '@改名 ' in line_text:
         line_text = line_text.replace('@改名 ', '')
-        user_id = event.source.user_id
-
-        cursor = conn.cursor()
-        cursor.execute("UPDATE userdata SET name = %s WHERE userid = %s",(line_text, user_id))
-        conn.commit()
-        cursor.close()
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='成功'))
+        if line_text == '':
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='姓名請勿為空'))
+        else:
+            user_id = event.source.user_id
+            cursor = conn.cursor()
+            cursor.execute("UPDATE userdata SET name = %s WHERE userid = %s",(line_text, user_id))
+            conn.commit()
+            cursor.close()
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='成功'))
 
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
