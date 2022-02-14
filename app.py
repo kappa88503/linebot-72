@@ -204,12 +204,7 @@ def handle_message(event):
 
     if '@註冊 ' in line_text:
         line_text = line_text.replace('@註冊 ', '')
-        check = False
-        for i in line_text:
-            if i != '':
-                check = True
-                break
-        if check == False:
+        if line_text == '':
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text='姓名請勿為空'))
         else:
             user_id = event.source.user_id
