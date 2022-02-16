@@ -193,12 +193,6 @@ def handle_message(event):
         line_text = line_text.replace('@算術 ', '')
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=eval(line_text)))
 
-    if line_text.lower() == 'name':
-        user_id = event.source.user_id
-        group_id = event.source.group_id
-        profile = line_bot_api.get_group_member_profile(group_id, user_id)
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=profile.display_name))
-
     if line_text.lower() == "test":
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='伺服器連線正常'))
 
@@ -242,11 +236,16 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text='姓名請勿為空'))
         else:
             user_id = event.source.user_id
+            group_id = event.source.group_id
+            profile = line_bot_api.get_group_member_profile(group_id, user_id)
+            username = profile.display_name
             cursor = conn.cursor()
             cursor.execute("UPDATE userdata SET name = %s WHERE userid = %s",(line_text, user_id))
+            cursor.execute("SELECT * FROM userdata WHERE userid = %s and username = %s;", (user_id, username))
+            user_data = cursor.fetchone()
             conn.commit()
             cursor.close()
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text='成功'))
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=f'成功\nline id = {user_data[1]}\nname = {user_data[2]}'))
 
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
