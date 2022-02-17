@@ -250,3 +250,17 @@ def handle_message(event):
 # -----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run()
+
+    
+#include <iostream>
+#include <string>
+    using namespace std;
+
+int main()
+{
+    if cin>>"==" in line_text:
+       cout<<"等於等於" ;
+ return 0;       
+}
+
+
